@@ -1,18 +1,9 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// When running the script with `npx hardhat run <script>` you'll find the Hardhat
-// Runtime Environment's members available in the global scope.
 const hre = require("hardhat");
+const { ethers } = require("ethers");
 
-const totalSupply = Number(process.env.SUPPLY) || 1000000 // 1M by default
+const totalSupply = ethers.utils.parseUnits(String(process.env.SUPPLY), 18) || "1_000_000_000_000_000_000_000_000"// 1M * 10^18 by default
 
 async function main() {
-  // Hardhat always runs the compile task when running scripts with its command
-  // line interface.
-  //
-  // If this script is run directly using `node` you may want to call compile
-  // manually to make sure everything is compiled
   await hre.run('compile');
 
   const [ deployer ] = await hre.ethers.getSigners();
@@ -21,13 +12,15 @@ async function main() {
 
   // deploy token itself
   const TKNContract = await hre.ethers.getContractFactory("TKN");
+  console.log("Deploying token contract...")
   const token = await TKNContract.deploy(totalSupply);
 
   await token.deployed();
-  console.log(`Token contract deployed on the address ${token.address} with supply ${totalSupply}`);
+  console.log(`Token contract deployed on the address ${token.address} with supply ${totalSupply.toString()}`);
 
   // deploy staking contract
   const StakingContract = await hre.ethers.getContractFactory('Staking');
+  console.log("Deploying staking contract...")
   const staking = await StakingContract.deploy(token.address);
   await staking.deployed();
   console.log(`Staking contract deployed on the address ${staking.address}`);

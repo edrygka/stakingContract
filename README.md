@@ -1,4 +1,4 @@
-# Basic Sample Hardhat Project
+# Staking implementation(non-upgradeable)
 
 Users stake different quantities of ERC-20 token named “TKN”. Assume that an external caller would periodically transfer reward TKNs to a staking smart contract (no need to implement this logic). Rewards are proportionally distributed based on staked TKN.
 
@@ -23,9 +23,6 @@ Contract owner is able to distribute reward proportionally to all active stakers
 Stake holder can withdraw all his funds by calling this function.
 *NOTE*: If you are not stake holder call will be reverted, also if you have no active stake you can't withdraw anything.
 
-##### **getAllStakers**()
-You can output every single stake holder with their deposit. 
-
 #### Get started
 
 To run tests just go:
@@ -35,11 +32,18 @@ npm test
 
 To deploy contracts to local network run:
 ```sh
-SUPPLY=200 npm start
+SUPPLY=1000 GAS_PRICE=10000000000 GAS_LIMIT=3000000 npx hardhat run --network goerli scripts/deploy.js
 ```
-By default supply equals to `1 000 000`
+By default supply equals to `1 000 000 * 10^18`
+
+To verify contract run:
+```sh
+npx hardhat verify --network goerli 0xd95842d35D684e0aF6d4aFf917eD232935CA507a "0x8F046CE5Af73628fF2E9528dD819B2c195928Cc9"
+```
 
 ### Next enhancements
 * unstake a part of stake for each user
 * proxy implementation
-* set up deploy for wide amount of networks
+* split deploy script for each contract
+* add more tests for TKN contract
+* set up linter to standardize code style

@@ -4,8 +4,10 @@
   "description": "Users stake different quantities of ERC-20 token named “TKN”. Rewards are proportionally distributed based on staked TKN.",
   "main": "index.js",
   "scripts": {
-    "test": "npx hardhat coverage",
-    "start": "node scripts/sample-script.js"
+    "coverage": "hardhat coverage",
+    "test": "hardhat test",
+    "build": "hardhat compile",
+    "solhint": "solhint 'contracts/**/*.sol'"
   },
   "repository": {
     "type": "git",
@@ -22,15 +24,18 @@
   },
   "homepage": "https://github.com/edrygka/stakingContract#readme",
   "devDependencies": {
-    "@nomiclabs/hardhat-ethers": "^2.0.2",
-    "@nomiclabs/hardhat-waffle": "^2.0.1",
-    "chai": "^4.3.4",
-    "ethereum-waffle": "^3.4.0",
-    "ethers": "^5.5.1",
-    "hardhat": "^2.6.7",
-    "solidity-coverage": "^0.7.17"
-  },
-  "dependencies": {
-    "@openzeppelin/contracts": "^4.3.2"
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "@nomiclabs/hardhat-etherscan": "^3.1.7",
+    "@nomiclabs/hardhat-waffle": "^2.0.6",
+    "@openzeppelin/contracts": "^4.9.2",
+    "chai": "^4.3.7",
+    "dotenv": "^16.3.1",
+    "ethereum-waffle": "^4.0.10",
+    "ethers": "^5.7.2",
+    "hardhat": "^2.16.1",
+    "hardhat-gas-reporter": "^1.0.9",
+    "solhint": "^3.4.1",
+    "solhint-plugin-prettier": "^0.0.5",
+    "solidity-coverage": "^0.8.4"
   }
 }
