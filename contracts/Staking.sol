@@ -52,7 +52,6 @@ contract Staking is IStaking, Ownable {
         StakeHolder memory _stakeHolder
     ) private view returns (uint) {
         return
-            _stakeHolder.stake +
             (_stakeHolder.stake *
                 (rewardPerStakeUnit - _stakeHolder.snapshot)) /
             FACTOR;
@@ -74,15 +73,21 @@ contract Staking is IStaking, Ownable {
 
     /**
      * @dev Unstake all tokens the user received during staking period
+     * @param _amount amount of tokens to unstake
      */
-    function unstake() public {
+    function unstake(uint _amount) public {
+        require(_amount != 0, "Staking: NOT ZERO");
         StakeHolder storage holder = stakeHolders[msg.sender];
         require(holder.stake != 0, "Staking: NOT EXIST");
+        require(_amount <= holder.stake, "Staking: INVALID");
 
-        allActiveStakes -= holder.stake;
-        uint amount = _calculateReward(holder);
-        holder.stake = 0;
-        stakingToken.safeTransfer(msg.sender, amount);
-        emit Unstake(msg.sender, amount);
+        uint reward = _calculateReward(holder);
+        allActiveStakes -= _amount;
+        holder.stake -= _amount;
+        holder.snapshot = rewardPerStakeUnit;
+
+        uint tokensToSend = _amount + reward;
+        stakingToken.safeTransfer(msg.sender, tokensToSend);
+        emit Unstake(msg.sender, tokensToSend);
     }
 }
