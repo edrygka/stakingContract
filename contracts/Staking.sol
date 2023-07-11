@@ -53,8 +53,7 @@ contract Staking is IStaking, Ownable {
     ) private view returns (uint) {
         return
             (_stakeHolder.stake *
-                (rewardPerStakeUnit - _stakeHolder.snapshot)) /
-            FACTOR;
+                (rewardPerStakeUnit - _stakeHolder.snapshot)) / FACTOR;
     }
 
     /**

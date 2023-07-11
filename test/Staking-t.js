@@ -165,7 +165,6 @@ describe("Staking", () => {
         "Staking: NO STAKERS"
       );
     });
-    // TODO: test fractional divisions and round calculations
   });
 
   describe("unstake", () => {
