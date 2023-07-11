@@ -1,7 +1,7 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
-describe("ERC-20 token", function () {
+describe("TKN", function () {
   let accounts;
 
   before(async () => {

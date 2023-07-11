@@ -1,10 +1,10 @@
 //SPDX-License-Identifier: Unlicense
-pragma solidity 0.8.4;
+pragma solidity 0.8.20;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract TKN is ERC20 {
-    constructor(uint256 initialSupply) ERC20("Token", "TKN") {
+    constructor(uint initialSupply) ERC20("Token", "TKN") {
         _mint(msg.sender, initialSupply);
     }
 }
